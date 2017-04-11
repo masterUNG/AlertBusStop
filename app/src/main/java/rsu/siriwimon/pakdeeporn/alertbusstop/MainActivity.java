@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
                     myLoop();
                 }
-            }, 1000);
+            }, 5000);
         }
 
 
@@ -207,6 +207,7 @@ public class MainActivity extends AppCompatActivity {
                 indexDistance[i] = Integer.parseInt(cursor.getString(5));
 
                 Log.d("27febV4", "ระยะห่างจากจุดที่ (" + i + ") ==> " + distanceDoubles[i]);
+                Log.d("11AprilV1", "ระยะห่างจากจุดที่ (" + i + ") ==> " + distanceDoubles[i]);
                 Log.d("27febV4", "index ==> " + indexDistance[i]);
                 Log.d("27febV4", "ระยะคำนวน ==> " + seriousDistance[indexDistance[i]]);
                 Log.d("27febV4", "boolean Notification ==> " + notificationABoolean);
