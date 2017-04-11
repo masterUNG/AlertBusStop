@@ -39,28 +39,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        myManage = new MyManage(MainActivity.this);
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        criteria = new Criteria();
-        criteria.setAccuracy(Criteria.ACCURACY_FINE);
-        criteria.setAltitudeRequired(false);
-        criteria.setBearingRequired(false);
+        //My SetUp
+        mySetUp();
 
         //Bind Widget การผูกตัวแปร
-        listView = (ListView) findViewById(R.id.livBusStop);
-        button = (Button) findViewById(R.id.button);
+        bindWidget();
 
         //Create ListView
         createListView();
 
         //Button controller
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mySoundEfect(R.raw.add_bus1);
-            }// onClick
-        });
+        buttonController();
+
         // Long Click Button Controller
+        longClickButtonController();
+
+        //My Loop
+        myLoop();
+
+
+    }// Main Medthod
+
+    private void longClickButtonController() {
         button.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -72,12 +72,30 @@ public class MainActivity extends AppCompatActivity {
 
             } // onLongClick
         });
+    }
 
-        //My Loop
-        myLoop();
+    private void buttonController() {
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mySoundEfect(R.raw.add_bus1);
+            }// onClick
+        });
+    }
 
+    private void bindWidget() {
+        listView = (ListView) findViewById(R.id.livBusStop);
+        button = (Button) findViewById(R.id.button);
+    }
 
-    }// Main Medthod
+    private void mySetUp() {
+        myManage = new MyManage(MainActivity.this);
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        criteria = new Criteria();
+        criteria.setAccuracy(Criteria.ACCURACY_FINE);
+        criteria.setAltitudeRequired(false);
+        criteria.setBearingRequired(false);
+    }
 
     private void myNotification(String strSound) {
 
@@ -199,7 +217,6 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("27febV4", "Notification Work");
 
 
-
                     // ดูว่าเป็นการเข้าครั้งแรกปะ
                     if (notificationABoolean) {
                         aDouble = seriousDistance[indexDistance[i]];
@@ -301,7 +318,8 @@ public class MainActivity extends AppCompatActivity {
             //Read All SQLite
             SQLiteDatabase sqLiteDatabase = openOrCreateDatabase(MyOpenHelper.database_name,
                     MODE_PRIVATE, null);
-            Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM busTABLE WHERE Destination = 1", null);
+            //Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM busTABLE WHERE Destination = 1", null);
+            Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM busTABLE", null);
             cursor.moveToFirst();
             int intCursor = cursor.getCount();
             Log.d("27febV2", "intCursor ==> " + intCursor);
